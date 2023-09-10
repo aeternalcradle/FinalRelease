@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+        [v-cloak]{
+            display: none !important;
+        }
+    </style>
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+</head>
+<body>
+
+<div id="app">
+    <div>
+        <label>题目id</label>
+        <textarea id="id" class="form-control" type="text" rows="1" style="width: 100px" v-model="problem.id" readonly></textarea>
+    </div>
+    <br>
+    <div>
+        <label>题目标题</label>
+        <textarea id="title" class="form-control" type="text" rows="1" style="width: 500px" v-model="problem.title" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label>题目难易程度</label>
+        <textarea id="level" class="form-control" type="text" rows="1" style="width: 100px" v-model="problem.level" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label>题目描述信息</label>
+        <textarea id="description" class="form-control" type="text" rows="8" style="width: 700px" v-model="problem.description" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label>题目模板代码</label>
+        <textarea id="templateCode" class="form-control" type="text" rows="8" style="width: 700px;" v-model="problem.templateCode" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label>题目测试用例</label>
+        <textarea id="testCode" class="form-control" type="text" rows="8" style="width: 700px" v-model="problem.testCode" required></textarea>
+    </div>
+    <br>
+    <br>
+    <div id="toUpdate">
+        <button id="tup" type="submit" class="form-control" style="background: #4892ff" v-on:click="updateProblem">提交修改</button>
+    </div>
+</div>
+
+
+<script src="../js/vue.js"></script>
+<script src="../js/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+
+<script>
+    let receive = window.opener["filter"];
+    //获取接收到的数据
+    let id = receive["id"];
+    console.log(id)
+
+    let dp = new Vue({
+        el: '#app',
+        data: {
+            name: "",
+            problems: [
+            ],
+
+            problem: {
+                id: '',
+                title: '',
+                level: '',
+                description: '',
+                templateCode: '',
+                testCode: ''
+            }
+        },
+        mounted: function () {
+            this.toUpdateProblem(id)
+        },
+        methods: {
+            checkLogin() {
+                // 页面最初加载时先访问服务器判定自身的登陆状态.
+                console.log("checkLogin");
+                $.ajax({
+                    url: '/checkLogin',
+                    type: 'post',
+                    data: '',
+                    dataType: 'json',
+                    success: function (data, status) {
+                        if (data.ok !== 1) {
+                            return;
+                        }
+                        dp.name = data.name;
+                    }
+                });
+            },
+            toUpdateProblem(id) {
+                $.ajax({
+                    url: '/toUpdate?id=' + id,
+                    type: 'post',
+                    data: '',
+                    success: function (data) {
+                        dp.problem = JSON.parse(data);
+                        dp.name = data.name
+                    }
+                })
+            },
+            updateProblem() {
+                let problem = {
+                    id: document.getElementById("id").value,
+                    title: document.getElementById("title").value,
+                    level: document.getElementById("level").value,
+                    description: document.getElementById("description").value,
+                    templateCode: document.getElementById("templateCode").value,
+                    testCode: document.getElementById("testCode").value
+                }
+                $.ajax({
+                    url: "/update",
+                    type: "post",
+                    data: JSON.stringify(problem),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.ok !== 0) {
+                            alert("修改成功")
+                            dp.name = data.name
+                            location.href = "../html/adminManage.html";
+                        } else {
+                            alert(data.reason)
+                            return;
+                        }
+                    }
+                })
+            },
+        }
+    });
+    dp.checkLogin()
+
+</script>
+
+
+
+</body>
+</html>

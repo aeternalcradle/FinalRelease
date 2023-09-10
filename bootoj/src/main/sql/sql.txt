@@ -1,0 +1,18 @@
+create database online_oj;
+use online_oj;
+
+CREATE TABLE problem(
+    `id` INT(10) PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50),
+    `level` VARCHAR(50),
+    description TEXT,
+    templateCode TEXT,
+    testCode TEXT
+);
+
+CREATE TABLE `admin`(
+    `username` VARCHAR(50) PRIMARY KEY,
+    `password` VARCHAR(50)
+);
+
+insert into admin(username, password) values('root', 'root');

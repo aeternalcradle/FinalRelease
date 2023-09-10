@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hao.mapper.AdminMapper">
+
+    <select id="getAdminByName" resultType="admin">
+        select * from online_oj.admin where username=#{username}
+    </select>
+
+    <insert id="addAdmin" parameterType="com.hao.pojo.Admin">
+        INSERT INTO online_oj.admin (username, password)
+        VALUES (#{username}, #{password})
+    </insert>
+
+    <select id="isUsernameExists" resultType="java.lang.Boolean">
+        SELECT EXISTS(SELECT 1 FROM admin WHERE username = #{username})
+    </select>
+
+</mapper>

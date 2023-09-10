@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>新增题目</title>
+    <!--BootStrap美化界面-->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+
+<br>
+<br>
+<div id="app" style="background: #3c4c57">
+    <div>
+        <label style="color: white">题目id</label>
+        <textarea id="id" class="form-control" type="text" rows="1" style="width: 100px; background: #566d7d; color: white" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label style="color: white">题目标题</label>
+        <textarea id="title" class="form-control" type="text" rows="1" style="width: 500px; background: #566d7d; color: white" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label style="color: white">题目难易程度</label>
+        <textarea id="level" class="form-control" type="text" rows="1" style="width: 100px; background: #566d7d; color: white" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label style="color: white">题目描述信息</label>
+        <textarea id="description" class="form-control" type="text" rows="8" style="width: 700px; background: #566d7d; color: white" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label style="color: white">题目模板代码</label>
+        <textarea id="templateCode" class="form-control" type="text" rows="8" style="width: 700px; background: #566d7d; color: white" required></textarea>
+    </div>
+    <br>
+    <div>
+        <label style="color: white">题目测试用例</label>
+        <textarea id="testCode" class="form-control" type="text" rows="8" style="width: 700px; background: #566d7d; color: white" required></textarea>
+    </div>
+    <br>
+    <br>
+    <div>
+        <button id="add" type="submit" class="form-control" style="background: #4892ff" v-on:click="a()">添加</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<script src="../js/vue.js"></script>
+<script>
+
+    let app = new Vue({
+        el: '#app',
+        data: {
+            name: "",
+        },
+        methods: {
+            checkLogin() {
+                // 页面最初加载时先访问服务器判定自身的登陆状态.
+                console.log("checkLogin");
+                $.ajax({
+                    url: '/checkLogin',
+                    type: 'post',
+                    data: '',
+                    dataType: 'json',
+                    success: function (data, status) {
+                        if (data.ok !== 1) {
+                            return;
+                        }
+                        app.name = data.name;
+                    }
+                });
+            },
+            a() {
+                let problem = {
+                    id: document.getElementById("id").value,
+                    title: document.getElementById("title").value,
+                    level: document.getElementById("level").value,
+                    description: document.getElementById("description").value,
+                    templateCode: document.getElementById("templateCode").value,
+                    testCode: document.getElementById("testCode").value
+                }
+                $.ajax({
+                    url: "/add",
+                    type: "post",
+                    data: JSON.stringify(problem),
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.ok !== 0) {
+                            alert("新增成功")
+                            app.name = data.name
+                            location.href = "../html/adminManage.html";
+                        } else {
+                            alert(data.reason)
+                            return;
+                        }
+                    },
+                })
+            }
+        }
+    })
+    app.checkLogin()
+</script>
+
+</body>
+</html>

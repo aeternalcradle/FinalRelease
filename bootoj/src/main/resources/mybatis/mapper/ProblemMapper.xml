@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hao.mapper.ProblemMapper">
+    <select id="queryAllList" resultType="problem">
+        select `id`, `title`, `level` ,`tag`from online_oj.problem;
+    </select>
+
+    <select id="queryOne" resultType="problem">
+        select * from online_oj.problem where id=#{id};
+    </select>
+
+    <!--useGeneratedKeys="true" keyProperty="id" 表示我们这个id要自增的-->
+    <insert id="insertProblem" parameterType="problem">
+        insert into online_oj.problem(id, title, `level`, description, templateCode, testCode, input_desc, output_desc, tag) values (#{id}, #{title}, #{level}, #{description}, #{templateCode}, #{testCode}, #{input_desc}, #{output_desc}, #{tag});
+    </insert>
+
+
+    <select id="queryOneProblemToAdmin" resultType="problem">
+        select * from online_oj.problem where id=#{id};
+    </select>
+
+    <update id="updateProblem">
+        update online_oj.problem
+        <include refid="problemUpdate"/>
+        <include refid="problemFind"/>
+    </update>
+
+    <sql id="problemFind">
+        <where>
+            <if test="id != null">id=#{id}</if>
+        </where>
+    </sql>
+
+    <sql id="problemUpdate">
+        <set>
+            <if test="title != null">title=#{title},</if>
+            <if test="level != null">`level`=#{level},</if>
+            <if test="description != null">`description`=#{description},</if>
+            <if test="templateCode != null">`templateCode`=#{templateCode},</if>
+            <if test="input_desc != null">`input_desc`=#{input_desc},</if>
+            <if test="output_desc != null">`output_desc`=#{output_desc},</if>
+            <if test="tag != null">`tag`=#{tag},</if>
+
+        </set>
+    </sql>
+
+    <delete id="deleteProblem">
+        delete from online_oj.problem where id=#{id};
+    </delete>
+
+    <select id="getTestCaseByProblemId" resultType="testcase">
+        SELECT *
+        FROM testcase
+        WHERE problem_id = ${id}
+    </select>
+
+    <insert id="addTestCase" parameterType="com.hao.pojo.TestCase">
+        INSERT INTO online_oj.testcase (id, problem_id, test_in, test_out)
+        VALUES (#{id}, #{problem_id}, #{test_in}, #{test_out})
+    </insert>
+
+    <delete id="deleteTestcasesByProblemId">
+        DELETE
+        FROM online_oj.testcase
+        WHERE problem_id = ${id}
+    </delete>
+</mapper>

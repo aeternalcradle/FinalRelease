@@ -1,0 +1,57 @@
+    <!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css"/>
+    <script type="text/javascript" src="../js/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+</head>
+
+<body>
+
+<div>
+
+    <div class="bgDiv">
+
+        <div class="login">
+<!--            <img class="logoImg" src="img/login.jpeg"/>-->
+            <h3 align="center" style="color: #566d7d">在线OJ管理员登录系统</h3>
+            <br>
+            <div class="username">
+                <input id="username" class="userInp" type="text" placeholder="请输入用户名"/>
+            </div>
+            <div class="pwd">
+                <input id="password" class="pwdInp" type="password" placeholder="请输入密码"/>
+            </div>
+            <button class="btn" type="button" onclick="a()">登录</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function a() {
+        let admin = {
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+        }
+        $.ajax({
+            url:"/login",
+            type: "post",
+            data: JSON.stringify(admin),
+            dataType: 'json',
+            success: function (data) {
+                if (data.ok !== 1) {
+                    alert('登陆失败! ' + data.reason);
+                    admin.password = "";
+                    return;
+                } else {
+                    location.href="../html/adminManage.html";
+                }
+            },
+
+        })
+    }
+</script>
+</body>
+</html>
