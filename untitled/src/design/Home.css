@@ -1,0 +1,36 @@
+
+
+.button-container {
+    display: flex;
+    align-items: center;
+}
+
+.spacer {
+    flex-grow: 1; /* 填充剩余空间 */
+}
+
+/* 如果使用antd的Button组件，可以通过下面的样式来调整按钮的位置 */
+.rbtn {
+    float: right;
+}
+
+.left-align-title {
+    text-align: left;
+    color: black;
+}
+.card {
+    text-align: left;
+}
+.scroll-to-top-button {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}

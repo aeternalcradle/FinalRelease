@@ -1,0 +1,41 @@
+.login-container {
+    background-size: cover;
+    min-height: 100vh; /* 设置容器高度为视口高度的100% */
+    /* 其他背景样式属性，如背景颜色、定位等 */
+}
+
+.home-container {
+    background-size: cover;
+    min-height: 100vh; /* 设置容器高度为视口高度的100% */
+    /* 其他背景样式属性，如背景颜色、定位等 */
+}
+
+body {
+    margin: 0;
+}
+
+.element {
+    margin: 0;
+}
+
+
+.parent-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.wraper {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* 可以调整上下间距 */
+}
+
+.pagination-container button {
+    /* 样式按钮，添加样式以适应你的设计 */
+    margin: 0 5px; /* 可以调整按钮之间的间距 */
+}

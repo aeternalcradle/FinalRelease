@@ -1,0 +1,44 @@
+/* custom-antd.css */
+/* 调整 Ant Design 组件在深色背景下的样式 */
+.ant-select-dropdown {
+    background-color: #f8f8f8; /* 下拉选择器的背景颜色 */
+    color: #ffffff; /* 下拉选择器的文字颜色 */
+}
+
+body {
+    background-color: #ffffff; /* 页面的背景颜色 */
+}
+
+.ant-select-item {
+    color: #ffffff; /* 下拉选项的文字颜色 */
+}
+
+/* 调整 Ant Design 的按钮样式 */
+.ant-btn-primary {
+    background-color: #007bff; /* 主要按钮的背景颜色 */
+    border-color: #007bff;
+    color: #fff; /* 主要按钮的文字颜色 */
+}
+
+/* 调整 Ant Design 的输入框样式 */
+.ant-input {
+    background-color: #ffffff; /* 输入框的背景颜色 */
+    color: #000000; /* 输入框的文字颜色 */
+    width: 800px;
+}
+
+/* 调整 Ant Design 的文字样式 */
+.ant-typography {
+    color: #000; /* 文字的颜色 */
+}
+
+/* 调整 Ant Design 的分割线样式 */
+.ant-divider {
+    border-top-color: #fff; /* 分割线的颜色 */
+}
+
+/* 调整 Ant Design 的文本域样式 */
+.ant-input-textarea {
+    background-color: #444; /* 文本域的背景颜色 */
+    color: #000;; /* 文本域的文字颜色 */
+}
